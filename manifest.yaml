@@ -1,0 +1,122 @@
+# 能力清单（安全声明）—— training-sft（长任务 2）
+#
+# 语义：本清单是**白名单**。未声明的 capability 一律视为"未声明所以拒绝"，
+# 与"设计上不做"（not_provided）显式区分。
+#
+# 风险档沿用推理三插件已固化的词表（同一台机器只应有一套）：
+#   read   = R0/R1 只读，无沙箱要求，不需要确认令牌
+#   write  = R1/R2 写操作，需沙箱（train/validate 声明 container；本机 process 层策略上降级到容器）
+#   system = R4 系统级，需 VM 级沙箱 —— 本机无 VM，故一律拒绝
+
+name: @xiciyang/training-sft
+version: 0.1.0
+interface:
+  mcp: "1.0.0"
+  cli: "1.0.0"
+
+capabilities:
+  - id: prepare
+    tool: training_sft_prepare
+    risk: write
+    sandbox: none
+    idempotent: true
+    confirmation: not-required
+    resources: ['disk:write', 'state:read']
+  - id: train
+    tool: training_sft_train
+    risk: write
+    sandbox: container
+    idempotent: false
+    confirmation: required
+    resources: ['gpu:write', 'disk:write', 'state:write', 'model:read']
+  - id: validate
+    tool: training_sft_validate
+    risk: write
+    sandbox: container
+    idempotent: false
+    confirmation: required
+    resources: ['gpu:write', 'port:bind', 'state:write', 'model:read']
+  - id: merge
+    tool: training_sft_merge
+    risk: write
+    sandbox: container
+    idempotent: true
+    confirmation: required
+    resources: ['disk:write', 'state:write', 'model:read']
+  - id: rollback
+    tool: training_sft_rollback
+    risk: write
+    sandbox: none
+    idempotent: true
+    confirmation: required
+    resources: ['disk:write', 'state:write']
+  - id: get_report
+    tool: training_sft_get_report
+    risk: read
+    sandbox: none
+    idempotent: true
+    confirmation: not-required
+    resources: ['state:read']
+  - id: health
+    tool: training_sft_health
+    risk: read
+    sandbox: none
+    idempotent: true
+    confirmation: not-required
+    resources: []
+
+not_provided:
+  - id: pretrain
+    reason: 只做 SFT（长任务 2 范围）。预训练契约存在（training-pretrain-contract.md，skeleton），但不实现。
+  - id: rl
+    reason: 不做 RL/偏好优化（长任务 2 范围外）。
+  - id: qat
+    reason: 不做 QAT —— 且长期指令「主模型不做量化优化」是否适用于训练侧尚未裁决（见 LONGTASK1_REPORT §12）。
+  - id: quantization
+    reason: SFT 全程 BF16，不引入任何量化步骤。SFT 产出**可以**作为量化输入，但量化本身归 inference-quantization。
+  - id: distributed_training
+    reason: v0 不做分布式（DDP/FSDP/TP/PP）；并发恒为 1。
+  - id: modify_base_model
+    reason: 基座模型只读；LoRA 权重与合并产物一律写到独立运行目录。
+  - id: touch_existing_endpoints
+    reason: validate 只创建并拆解**自己租用**的端点；存量端点一律只读，绝不触碰。
+  - id: sanitize_data
+    reason: 硬性不做：发现 PII 只**剔除整行**并记录哈希清单，绝不改写行内内容（纪律禁止"自行脱敏后继续"）。
+  - id: synthesize_data
+    reason: 硬性不做：不自行合成训练数据。
+  - id: system_level_change
+    reason: 不改宿主 OS/驱动/内核；vm 沙箱本机不可用，系统级动作一律拒绝。
+
+dependencies:
+  - name: inference-serving
+    via: mcp
+    purpose: validate 阶段的端点生命周期（deploy/teardown）与加载器可用性探针
+    required: true
+  - name: "@ai-infra/training-core"
+    via: internal
+    purpose: 公共训练循环 / 资源上限 / checkpoint / 审计钩子
+    required: true
+  - name: "@ai-infra/testing-core"
+    via: internal
+    purpose: 双重门禁与测量判据（ε 推导 / 相对变化 / 浮点指纹）
+    required: true
+  - name: "@ai-infra/data-core"
+    via: internal
+    purpose: 去重 / 确定性切分 / 去泄漏 / PII 扫描 / 血缘
+    required: true
+  - name: "@ai-infra/state-core"
+    via: internal
+    purpose: sft-registry 方言与乐观并发写
+    required: true
+  - name: "@ai-infra/audit-core"
+    via: internal
+    purpose: 训练审计哈希链
+    required: true
+  - name: "@ai-infra/sandbox-core"
+    via: internal
+    purpose: 沙箱层级行为探测与降级策略
+    required: true
+
+host:
+  node: ">=20.11.0"
+  runtimeDependencies: 0

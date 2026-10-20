@@ -1,0 +1,72 @@
+{
+  "name": "@xiciyang/training-sft",
+  "version": "0.1.0",
+  "description": "SFT (LoRA) 薄插件：数据校验 → 公共训练循环（training-core，容器内 peft） → 合并 → serving 部署 → 评估门禁。依赖长任务 1 冻结的六个 @ai-infra/* 共享库。",
+  "type": "module",
+  "main": "./src/index.mjs",
+  "bin": {
+    "training-sft": "./bin/training-sft.mjs"
+  },
+  "exports": {
+    ".": {
+      "default": "./src/index.mjs"
+    },
+    "./tools": {
+      "default": "./src/tools.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "bin",
+    "mcp",
+    "python",
+    "skills",
+    "manifest.yaml",
+    "cordis.patch.yml"
+  ],
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "@xiciyang/audit-core": "0.0.x",
+    "@xiciyang/data-core": "0.0.x",
+    "@xiciyang/sandbox-core": "0.0.x",
+    "@xiciyang/state-core": "0.0.x",
+    "@xiciyang/testing-core": "0.0.x",
+    "@xiciyang/training-core": "0.0.x"
+  },
+  "optionalDependencies": {
+    "torch": ">=2.0.0 <3",
+    "transformers": ">=4.40.0 <6",
+    "peft": ">=0.10.0 <1",
+    "trl": ">=0.9.0 <1",
+    "accelerate": ">=0.30.0 <2"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-tools": ">=0.0.1-rc <2",
+    "cordis": ">=4.0.0-rc <5"
+  },
+  "scripts": {
+    "test": "node tests/run.mjs",
+    "test:unit": "node tests/run.mjs",
+    "test:contract": "node ../inference-contracts/checks/run-all.mjs",
+    "prepare-data": "node src/data/prepare.mjs",
+    "health": "node bin/training-sft.mjs health"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "dsh"
+  ],
+  "engines": {
+    "dsh": ">=0.2.0 <0.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiciyang/training-sft.git"
+  }
+}
