@@ -21,7 +21,7 @@
   "sandboxEvidence": { "cmd": "echo ok", "exitCode": 0, "ms": 142, "runnerMethod": "executed" },
   "image": { "name": "training-sft/toolchain:0.1.0", "available": true, "id": "f82151dd84fb" },
   "gpu": "NVIDIA GB10, 580.126.09",
-  "baseModel": { "path": "/data/models/Qwen2.5-0.5B-Instruct", "available": true },
+  "baseModel": { "path": "<BASE_MODEL>", "available": true },
   "serving": { "available": true, "serverPath": ".../inference-serving/mcp/server.mjs" },
   "audit": { "ok": true, "shards": 1, "detail": [{ "day": "2026-09-29", "checked": 29, "ok": true }] },
   "limits": { "maxSteps": 200, "maxGpuHours": 2, "concurrency": 1, "maxParams": 500000000 } }

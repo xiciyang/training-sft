@@ -20,8 +20,8 @@ const OUT = join(HERE, '..', 'out')
 mkdirSync(OUT, { recursive: true })
 
 const CANDIDATES = [
-  { id: 'A-tatsu-lab-alpaca', file: '/data/datasets/alpaca-nc/alpaca_data.jsonl' },
-  { id: 'B-yahma-alpaca-cleaned', file: '/data/datasets/alpaca-cleaned/alpaca_data_cleaned.json' },
+  { id: 'A-tatsu-lab-alpaca', file: '<DATA_DIR>/alpaca-nc/alpaca_data.jsonl' },
+  { id: 'B-yahma-alpaca-cleaned', file: '<ALPACA_PATH>' },
 ]
 
 /** 保留/示例空间判定 —— 这些**不构成个人信息**（RFC 2606 / RFC 1918 / RFC 5737 / 常见占位）。 */

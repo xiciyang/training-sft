@@ -95,7 +95,7 @@ wikitext 配对 NLL 的退化**刚好在判据边界内**（`0.001872` vs 界 `0
 ### P2 #18 的**最强证据**：真实 DSH 注入后真调成功 `[实测]`
 
 ```
-dev_inject_plugin /home/xiciyang/deepseek_harness/inference-training/training-sft
+dev_inject_plugin <repo>
   → OK: training-sft 已注入（junction=…/profiles/web/node_modules/training-sft）；host ✓；client 跳过（无 client 声明，属预期）
 
 training_sft_health()          → ok:true，sandboxTiers={process:true,container:true,vm:false}，镜像 f82151dd84fb，

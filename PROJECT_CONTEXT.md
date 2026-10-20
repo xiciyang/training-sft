@@ -17,7 +17,7 @@
 | 5 | testing-core 训练侧扩展点 | ✅ 11 个导出；训练侧**判定**逻辑可直接复用（`dualGate` / `relativeChange` / `perplexity` / `uniformSignature`）；**指标抽取**（格式合规率等任务指标）属 training-sft，不另造判定逻辑 |
 | 6 | training-core 接口 | ✅ 14 个导出，接口已冻结（`createTrainingLoop` / `saveCheckpoint` / `loadCheckpoint` / `enforceLimits` / `createAuditHook` / `BUDGET_DEFAULTS`） |
 | 7 | 与 serving 的接口 | ✅ `inference_serving_deploy` 接受本地目录；**要求**：目录内需含 `README.md` 的 `license:` frontmatter 或 `LICENSE` 文件，否则 license 判为 `unknown` → `decision: ask` |
-| 8 | 基座模型缓存 | ✅ `Qwen/Qwen2.5-0.5B-Instruct` @ `/data/models/Qwen2.5-0.5B-Instruct`（**0.494B**、apache-2.0、rev `7ae557604adf67be50417f59c2c2f167def9a775`） |
+| 8 | 基座模型缓存 | ✅ `Qwen/Qwen2.5-0.5B-Instruct` @ `<BASE_MODEL>`（**0.494B**、apache-2.0、rev `7ae557604adf67be50417f59c2c2f167def9a775`） |
 
 ---
 
@@ -142,7 +142,7 @@ loss 3.859 · grad_norm 12.36 · optimizer.step() ok · cuda max mem 0.97 GiB
 | 项 | 值 |
 |---|---|
 | 模型 | `Qwen/Qwen2.5-0.5B-Instruct` |
-| 路径 | `/data/models/Qwen2.5-0.5B-Instruct` |
+| 路径 | `<BASE_MODEL>` |
 | 参数量 | **494,032,768 = 0.494 B**（现场统计） |
 | 磁盘 | 999,605,158 字节（954 MiB） |
 | license | `apache-2.0`（`LICENSE` 文件在） |

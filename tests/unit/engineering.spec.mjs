@@ -50,7 +50,7 @@ export async function run(t) {
   t.assert(/sandboxProbe|probeTiers/.test(srcText), '沙箱能力走行为探测而不是硬编码')
   const hardPaths = [...srcText.matchAll(/'(\/[A-Za-z0-9_./-]+)'/g)].map((m) => m[1])
   // 允许的绝对路径前缀：① 容器内固定挂载点 ② 探测得到的模型/数据集根 ③ HTTP 路径 ④ 容器内缓存目录
-  const allowedPrefix = ['/data/models/', '/data/datasets/', '/models/', '/data/', '/out', '/out-src', '/work/', '/eval/', '/v1/', '/__training_sft/', '/tmp', '/etc']
+  const allowedPrefix = ['<MODELS_DIR>/', '<DATA_DIR>/', '/models/', '/data/', '/out', '/out-src', '/work/', '/eval/', '/v1/', '/__training_sft/', '/tmp', '/etc']
   const bad = hardPaths.filter((p) => !allowedPrefix.some((a) => p.startsWith(a)))
   t.assert(bad.length === 0, `无未登记的硬编码绝对路径（实际：${bad.slice(0, 4).join(', ') || 'none'}）`)
   t.assert(/TRAINING_SFT_ROOT/.test(srcText), '共享状态根可被环境变量覆盖（多实例/测试隔离）')

@@ -15,7 +15,7 @@ try { imgOk = execFileSync('docker', ['images', '-q', image], { encoding: 'utf8'
 t.assert(imgOk, `镜像存在：${image}`)
 if (!imgOk) { console.log('镜像不存在 → 跳过（这是真机测试，未通过即视为失败）'); process.exit(1) }
 
-const w = new ContainerWorker({ image, mounts: ['/data/models:/models:ro'], gpus: true, entry: '/work/trainer.py', python: 'python3', log: (m) => console.log('  [w]', m) })
+const w = new ContainerWorker({ image, mounts: ['<MODELS_DIR>:/models:ro'], gpus: true, entry: '/work/trainer.py', python: 'python3', log: (m) => console.log('  [w]', m) })
 try {
   w.start()
   const p = await w.call('ping', {}, { timeoutMs: 120000 })

@@ -28,7 +28,7 @@ import { mean, stddev } from '@xiciyang/testing-core'
 
 const HOME = homedir()
 const IMAGE = 'training-sft/toolchain:0.1.0'
-const BASE_MODEL = '/data/models/Qwen2.5-0.5B-Instruct'
+const BASE_MODEL = '<BASE_MODEL>'
 const ACCEPTED_RUN = 'ts_20260929044120_kj5q'
 const CKPT = 'step-000200'
 const RUN_DIR = join(HOME, '.ai-infra/run/training-sft', ACCEPTED_RUN)

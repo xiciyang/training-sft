@@ -77,7 +77,7 @@ function selfCheckGate(prev, basePerText, sftPerText) {
 // 与已验收 run ts_20260929044120_kj5q **逐参数相同**（唯一种子不同）——
 // 否则"跨种子差异"会与"配置差异"混在一起，判据失义。
 const DATASET = join(HOME, '.ai-infra/state/datasets/yahma-alpaca-cleaned__sft__s20260929__n1000')
-const BASE_MODEL = '/data/models/Qwen2.5-0.5B-Instruct'
+const BASE_MODEL = '<BASE_MODEL>'
 const COMMON = Object.freeze({
   root: ROOT, baseModel: BASE_MODEL, datasetDir: DATASET,
   lora: {}, lr: 1e-4, weightDecay: 0.0,

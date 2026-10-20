@@ -18,11 +18,11 @@
 
 | 项 | 路径 | 实测 |
 |---|---|---|
-| 候选 A 下载 | `/data/datasets/alpaca-nc/` | `data.parquet` 24,246,638 B + 派生 `alpaca_data.jsonl` 20,918,996 B |
-| 候选 B 下载 | `/data/datasets/alpaca-cleaned/` | `alpaca_data_cleaned.json` 44,307,561 B |
+| 候选 A 下载 | `<DATA_DIR>/alpaca-nc/` | `data.parquet` 24,246,638 B + 派生 `alpaca_data.jsonl` 20,918,996 B |
+| 候选 B 下载 | `<DATA_DIR>/alpaca-cleaned/` | `alpaca_data_cleaned.json` 44,307,561 B |
 | 评估集（wikitext-2 test） | `~/.ai-infra/state/datasets/Salesforce-wikitext__*__c{128,512}/test.jsonl` | 各 400 条（长任务 1 已制备） |
-| 评估集（MMLU test） | `~/.cache/huggingface/datasets/cais___mmlu/<subject>/0.0.0/*/mmlu-test.arrow` | 57 科 / **14,042 条**，已抽出为 `/data/datasets/mmlu/mmlu-test.jsonl` |
-| 基座模型 | `/data/models/Qwen2.5-0.5B-Instruct` | 954 MiB |
+| 评估集（MMLU test） | `~/.cache/huggingface/datasets/cais___mmlu/<subject>/0.0.0/*/mmlu-test.arrow` | 57 科 / **14,042 条**，已抽出为 `<MMLU_PATH>` |
+| 基座模型 | `<BASE_MODEL>` | 954 MiB |
 
 **探测的属性**：条数 · 字段 · 格式 · license（含来源） · PII（模式 + 字段 + 是否占位） ·
 与各评估集的**内容哈希**交集 · 血缘（revision / 文件哈希 / 种子） · 去重规模。
@@ -149,14 +149,14 @@
   MMLU 的 `question` 字段）；**语义级近义改写不在此判据内**（内容哈希只能判逐字相同）。
 - MMLU 的 3/5 条相撞是"问题文本逐字相同"，**未**逐条判定是否同题不同问法。
 - 候选 A 的 `text` 字段（parquet 自带）在派生 jsonl 时被丢弃；最终训练整理方式若与该字段有关，
-  需回读 parquet（原文件保留在 `/data/datasets/alpaca-nc/data.parquet`）。
+  需回读 parquet（原文件保留在 `<DATA_DIR>/alpaca-nc/data.parquet`）。
 - 本轮**未**做 tokenizer 长度分布统计（属阶段 2 数据预处理的细节，待数据裁决后执行）。
 
 ## 8. 本轮已完成的动作与残留
 
 | 项 | 状态 |
 |---|---|
-| 下载候选 A / B（只读检查用） | ✅ 落在 `/data/datasets/`，**未**写入 `~/.ai-infra/state/` |
+| 下载候选 A / B（只读检查用） | ✅ 落在 `<DATA_DIR>/`，**未**写入 `~/.ai-infra/state/` |
 | license / revision / 文件哈希 | ✅ |
 | PII 全量扫描 + 分类 | ✅ |
 | 测试集交集（wikitext / MMLU / 候选互交） | ✅ |

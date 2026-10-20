@@ -20,8 +20,8 @@ const OUT = join(HERE, '..', 'out')
 mkdirSync(OUT, { recursive: true })
 
 const CANDIDATES = [
-  { id: 'A-tatsu-lab-alpaca', name: 'tatsu-lab/alpaca', file: '/data/datasets/alpaca-nc/alpaca_data.jsonl', license: { spdx: 'cc-by-nc-4.0', class: 'restricted', source: 'https://hf-mirror.com/api/datasets/tatsu-lab/alpaca (tags: license:cc-by-nc-4.0) + 数据集卡片正文"available under the Creative Commons NonCommercial (CC BY-NC 4.0)"' } },
-  { id: 'B-yahma-alpaca-cleaned', name: 'yahma/alpaca-cleaned', file: '/data/datasets/alpaca-cleaned/alpaca_data_cleaned.json', license: { spdx: 'cc-by-4.0', class: 'permissive', source: 'https://hf-mirror.com/api/datasets/yahma/alpaca-cleaned (tags: license:cc-by-4.0)' } },
+  { id: 'A-tatsu-lab-alpaca', name: 'tatsu-lab/alpaca', file: '<DATA_DIR>/alpaca-nc/alpaca_data.jsonl', license: { spdx: 'cc-by-nc-4.0', class: 'restricted', source: 'https://hf-mirror.com/api/datasets/tatsu-lab/alpaca (tags: license:cc-by-nc-4.0) + 数据集卡片正文"available under the Creative Commons NonCommercial (CC BY-NC 4.0)"' } },
+  { id: 'B-yahma-alpaca-cleaned', name: 'yahma/alpaca-cleaned', file: '<ALPACA_PATH>', license: { spdx: 'cc-by-4.0', class: 'permissive', source: 'https://hf-mirror.com/api/datasets/yahma/alpaca-cleaned (tags: license:cc-by-4.0)' } },
 ]
 
 const TEST_SETS = []

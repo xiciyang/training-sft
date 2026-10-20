@@ -88,7 +88,7 @@ training-sft 的垂直闭环**已跑通并双门禁通过**；
 | 存活端点 | **0**（本轮两个端点均已 teardown） |
 | GPU | GB10，仅既有 `qwen3-embedding` 占用 4583 MiB（本轮未触碰） |
 | 训练镜像 | `training-sft/toolchain:0.1.0` @ `f82151dd84fb` |
-| 基座模型 | `/data/models/Qwen2.5-0.5B-Instruct`（0.494B，apache-2.0，rev `7ae5576…`） |
+| 基座模型 | `<BASE_MODEL>`（0.494B，apache-2.0，rev `7ae5576…`） |
 | 数据集 | `~/.ai-infra/state/datasets/yahma-alpaca-cleaned__sft__s20260929__n1000`（train 1000 / heldout 200，`allClear=true`） |
 | 主 run | `ts_20260929044120_kj5q`（validated，双门禁通过） |
 | DSH 挂载 | `training-sft` 已热注入（`dev_inject_plugin`），工具 `training_sft_*` 可调 |

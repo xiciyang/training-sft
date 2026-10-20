@@ -35,7 +35,7 @@ export const SOURCE = {
   url: 'https://hf-mirror.com/datasets/yahma/alpaca-cleaned',
   revision: '12567cabf869d7c92e573c7c783905fc160e9639',
   license: { spdx: 'cc-by-4.0', class: 'permissive', source: 'https://hf-mirror.com/api/datasets/yahma/alpaca-cleaned (tags: license:cc-by-4.0)' },
-  file: '/data/datasets/alpaca-cleaned/alpaca_data_cleaned.json',
+  file: '<ALPACA_PATH>',
   fileSha256: 'sha256:bd844b8247a0f543804b6ce0882b0aaec4bbf5e8d66167df6213a0f1e4fe878b',
 }
 
@@ -88,7 +88,7 @@ export function loadEvalSets() {
       sets.push({ name: `wikitext-test(${d.includes('c512') ? 'c512' : 'c128'})`, kind: 'lm', file: p, rows, keyOf: (r) => r.t, sha256: `sha256:${contentHash(readFileSync(p, 'utf8'))}` })
     }
   }
-  const mmlu = '/data/datasets/mmlu/mmlu-test.jsonl'
+  const mmlu = '<MMLU_PATH>'
   if (existsSync(mmlu)) {
     const rows = loadJson(mmlu)
     sets.push({ name: 'mmlu-test', kind: 'qa', file: mmlu, rows, keyOf: (r) => r.question, sha256: `sha256:${contentHash(readFileSync(mmlu, 'utf8'))}` })
