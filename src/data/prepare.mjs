@@ -97,7 +97,7 @@ export function loadEvalSets() {
       sets.push({ name: `wikitext-test(${d.includes('c512') ? 'c512' : 'c128'})`, kind: 'lm', file: p, rows, keyOf: (r) => r.t, sha256: `sha256:${contentHash(readFileSync(p, 'utf8'))}` })
     }
   }
-  const mmlu = '/data/datasets/mmlu/mmlu-test.jsonl'
+  const mmlu = process.env.DSH_MMLU_PATH
   if (existsSync(mmlu)) {
     const rows = loadJson(mmlu)
     sets.push({ name: 'mmlu-test', kind: 'qa', file: mmlu, rows, keyOf: (r) => r.question, sha256: `sha256:${contentHash(readFileSync(mmlu, 'utf8'))}` })
